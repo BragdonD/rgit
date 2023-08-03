@@ -26,7 +26,6 @@ pub fn load_ignore_patterns() -> io::Result<Vec<IgnorePattern>> {
             continue;
         }
         remove_end_of_line(&mut line.as_bytes().to_vec());
-        println!("Ignore pattern: {}", line);
         patterns.push(IgnorePattern::new(line.to_string())?);
     }
     Ok(patterns)

@@ -1,5 +1,6 @@
 use std::io;
-use object::object::Object;
+use crate::core::adder::add;
+use crate::object::object::Object;
 
 pub(crate) mod object;
 pub(crate) mod core;
@@ -14,13 +15,7 @@ fn main() -> io::Result<()> {
     let verbose = "--verbose".to_string();
     match command_name {
         "add" => {
-            if parameter.eq(".") {
-                // Needs to be implemented
-            } else {
-                // This was just a test to add a file 
-                // Going to be moved into a submenu
-                core::adder::add_file(parameter, additional_parameters.contains(&verbose))?;
-            }
+            add(parameter, additional_parameters);
         },
         "--help" | _ => {
             // Needs to be implemented to show the usage
