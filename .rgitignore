@@ -1,0 +1,6 @@
+# Ignore target directory
+/target
+# Ignore .rgit directory
+/.rgit
+# Ignore .gitignore file
+.gitignore
