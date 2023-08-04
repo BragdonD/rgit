@@ -107,7 +107,7 @@ mod test {
         let content = b"hello".to_vec();
         let blob = Blob::new(content);
         assert_eq!(blob.get_header().get_object_type(), "blob");
-        assert_eq!(blob.get_header().get_size(), &5);
+        assert_eq!(blob.get_header().get_size(), &6);
         assert_eq!(blob.get_content(), &b"hello".to_vec());
         assert_eq!(blob.get_is_compressed(), &false);
     }

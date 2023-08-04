@@ -12,10 +12,9 @@ pub(crate) mod core;
 fn main() -> io::Result<()> {
     let argv: Vec<String> = std::env::args().collect();
     let (command_name, parameter, additional_parameters) = parse_config(&argv).unwrap();
-    let verbose = "--verbose".to_string();
     match command_name {
         "add" => {
-            add(parameter, additional_parameters);
+            add(parameter, additional_parameters).unwrap();
         },
         "--help" | _ => {
             // Needs to be implemented to show the usage

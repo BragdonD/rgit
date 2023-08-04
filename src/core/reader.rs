@@ -9,6 +9,24 @@ pub fn read_workspace_file(file_path: &str) -> io::Result<Vec<u8>> {
     Ok(buffer)
 }
 
+pub fn read_workspace_dir(dir_path: &str) -> io::Result<Vec<u8>> {
+    let metadata = fs::metadata(dir_path)?;
+    if !metadata.is_dir() {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "Path is not a directory",
+        ));
+    }
+    let mut dir_content = Vec::new();
+    for entry in fs::read_dir(dir_path)? {
+        let entry = entry?;
+        let path = entry.path();
+        dir_content.extend(path.to_str().unwrap().as_bytes());
+        dir_content.extend("\n".as_bytes());
+    }
+    Ok(dir_content)
+}
+
 pub fn remove_end_of_line(buffer: &mut Vec<u8>) {
     if buffer.ends_with(&[b'\n']) {
         buffer.pop();
@@ -63,5 +81,12 @@ mod test {
         assert_eq!(patterns[1].is_ext(), false);
         assert_eq!(patterns[2].get_pattern(), ".gitignore");
         assert_eq!(patterns[2].is_file(), true);
+    }
+
+    #[test]
+    fn test_read_workspace_dir() {
+        let result = read_workspace_dir("./test");
+        assert!(result.is_ok());
+        assert_eq!(result.unwrap(), b"./test\\subtest\n./test\\test.txt\n".to_vec());
     }
 }

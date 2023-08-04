@@ -56,3 +56,19 @@ impl IgnorePattern {
         false
     }
 }
+
+pub fn should_ignore(path: &str, ignore_patterns: &Vec<IgnorePattern>) -> bool {
+    for pattern in ignore_patterns {
+        if pattern.is_match(path) {
+            return true;
+        }
+    }
+    false
+}
+
+pub fn default_ignore(path: &str) -> bool {
+    if path.starts_with(".git") || path.starts_with(".rgit") {
+        return true;
+    }
+    false
+}
